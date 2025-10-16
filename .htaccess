@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redirect everything to public/index.php if file/directory doesn't exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/index.php [QSA,L]
