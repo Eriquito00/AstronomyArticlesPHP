@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgba(30, 30, 30, 1);
+    color: white;
+    font-family: system-ui;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+}
