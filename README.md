@@ -1,2 +1,2 @@
 # AstronomyArticlesPHP
-Recoge artículos breves de astronomía de la API REST de Wikipedia usando PHP, guarda en base de datos y aplica paginación.
+Short astronomy articles from Wikipedia's REST API using PHP, saves to a database, and applies pagination.
