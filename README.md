@@ -286,7 +286,7 @@ AstronomyArticlesPHP/
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **PHP 7.4+**: Lenguaje de programación backend
+- **PHP 7.0+**: Lenguaje de programación backend (PHP 7.4+ recomendado, incluido en XAMPP)
 - **MySQL**: Sistema de gestión de bases de datos
 - **PDO (PHP Data Objects)**: Extensión para acceso a bases de datos de forma segura
 - **cURL**: Librería para realizar peticiones HTTP
@@ -325,7 +325,7 @@ Copyright (c) 2025 Eric Mejias Gamonal
 
 2. **Clona tu fork**
    ```bash
-   git clone https://github.com/TU_USUARIO/AstronomyArticlesPHP.git
+   git clone https://github.com/<TU_USUARIO>/AstronomyArticlesPHP.git
    cd AstronomyArticlesPHP
    ```
 
@@ -401,7 +401,7 @@ Si el `.htaccess` no funciona:
 
 1. Abre el archivo de configuración de Apache:
    - Windows: `C:\xampp\apache\conf\httpd.conf`
-   - Linux: `/opt/lampp/etc/httpd.conf`
+   - Linux: `/opt/lampp/etc/httpd.conf` (verifica la ruta según tu versión de XAMPP)
 
 2. Busca la línea:
    ```
