@@ -19,33 +19,21 @@ $pageName = getCsvTitle();
         <h1><?= $pageName; ?></h1>
     </header>
     <main>
-        <?php
-            $connection = createConnection();
-            $articleDAO = new ArticleDAOFunc($connection);
-            $articles = $articleDAO->getAllArticles();
-            foreach($articles as $article): 
-                if ($article["img"] !== null):?>
-                <section>
-                    <img src="<?= $article['img']; ?>" alt="Imagen de <?= $article['title']; ?>">
-                    <article>
-                        <h2><?= $article['title']; ?></h2>
-                        <p><?= $article['extract']; ?></p>
-                    </article>
-                </section>
-                <?php else: ?>
-                <section>
-                    <article>
-                        <h2><?= $article['title']; ?></h2>
-                        <p><?= $article['extract']; ?></p>
-                    </article>
-                </section>
-                <?php endif ?>
-            <?php endforeach;
-            $connection = null;
-        ?>
-        <form method="POST" action="">
+        <?php require_once(__DIR__ . "/articles.php"); ?>
+        
+        <form method="POST">
             <button type="submit" name="reload">Recargar artículos</button>
         </form>
+
+        <form method="GET">
+            <select name="articlesPerPage" onchange="this.form.submit()">
+                <?php $selected = isset($_GET['articlesPerPage']) ? (int)$_GET['articlesPerPage'] : 5; ?>
+                <option value="2" <?= ($selected == 2) ? 'selected' : '' ?>>2 artículos</option>
+                <option value="5" <?= ($selected == 5) ? 'selected' : '' ?>>5 artículos</option>
+                <option value="10" <?= ($selected == 10) ? 'selected' : '' ?>>10 artículos</option>
+            </select>
+        </form>
+
         <?php if (!empty($errors)): 
             foreach ($errors as $error): ?>
                 <p class="error"><?= htmlspecialchars($error); ?></p>

@@ -14,8 +14,10 @@ class ArticleDAOFunc implements articleDAO {
         return $stmt->rowCount() > 0;
     }
 
-    public function getAllArticles() {
-        $stmt = $this->connection->prepare("SELECT * FROM articles;");
+    public function getArticlesByPage($limit, $offset) {
+        $stmt = $this->connection->prepare("SELECT * FROM articles ORDER BY article_id DESC LIMIT ? OFFSET ?;");
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+        $stmt->bindParam(2, $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -28,6 +30,13 @@ class ArticleDAOFunc implements articleDAO {
             $article->getExtract(),
             $article->getImg()
         ]);
+    }
+
+    public function getCountArticles(){
+        $stmt = $this->connection->prepare("SELECT COUNT(*) as total FROM articles;");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)$result['total'];
     }
 }  
 ?>
