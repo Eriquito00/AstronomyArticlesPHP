@@ -40,22 +40,12 @@ La aplicación utiliza el patrón MVC (Modelo-Vista-Controlador) y sigue las mej
 
 #### Paso 2: Clonar el Repositorio
 
-1. Navega a tu directorio de instalación de XAMPP:
-   ```bash
-   # Windows
-   cd C:\xampp\htdocs
-   
-   # Linux
-   cd /opt/lampp/htdocs
-   
-   # macOS
-   cd /Applications/XAMPP/htdocs
-   ```
+1. Navega a tu directorio de instalación de XAMPP segun tu SO.
 
-2. **Opcional pero Recomendado**: Organiza los archivos originales de XAMPP:
+2. **Opcional pero Recomendado**: Crea una carpeta XamppOriginal para introducir dentro todos los archivos de la web original de XAMPP:
    ```bash
-   mkdir XamppOriginal
-   mv dashboard favicon.ico applications.html bitnami.css index.php XamppOriginal/
+   htdocs/
+   └── XamppOriginal/ (Archivos originales de XAMPP)
    ```
 
 3. Clona este repositorio:
@@ -73,14 +63,11 @@ La aplicación utiliza el patrón MVC (Modelo-Vista-Controlador) y sigue las mej
 #### Paso 3: Configurar y Iniciar los Servicios de XAMPP
 
 1. **Abrir el Panel de Control de XAMPP**
-   - Windows: Busca "XAMPP Control Panel" en el menú inicio
-   - Linux: Ejecuta `sudo /opt/lampp/manager-linux-x64.run`
-   - macOS: Abre la aplicación XAMPP
 
 2. **Iniciar los servicios necesarios**
    - Haz clic en el botón **"Start"** junto a **Apache**
    - Haz clic en el botón **"Start"** junto a **MySQL**
-   - Verifica que ambos servicios muestren el estado **"Running"** (en verde)
+   - Verifica que ambos servicios muestren el estado **"Running"**
 
 3. **Verificar que los servicios funcionan correctamente**
    - Apache debería estar ejecutándose en el puerto **80** (o **8080** si el 80 está ocupado)
@@ -93,11 +80,11 @@ La aplicación utiliza el patrón MVC (Modelo-Vista-Controlador) y sigue las mej
 
 2. Accede a la aplicación mediante una de estas URLs:
    ```
-   http://localhost/AstronomyArticlesPHP
+   http://localhost/AstronomyArticlesPHP/public
    ```
    O si el puerto 80 está ocupado y Apache está en el puerto 8080:
    ```
-   http://localhost:8080/AstronomyArticlesPHP
+   http://localhost:8080/AstronomyArticlesPHP/public
    ```
 
 3. **¡Listo!** La aplicación se iniciará automáticamente:
@@ -131,26 +118,9 @@ Una vez que accedas a la aplicación, verás:
    - 📷 Imagen representativa (si está disponible en Wikipedia)
    - 📝 Título del artículo
    - 📄 Extracto o resumen del contenido
-3. **Botón "Recargar artículos"**: Recarga todos los artículos desde la API de Wikipedia
+3. **Botón "Recargar artículos"**: Recarga toda la información empezando por analizar si hay nuevos artículos en el CSV, yendo a la API de Wikipedia para obtener la información e introduciendo los nuevos artículos a la base de datos.
 4. **Selector de paginación**: Permite elegir cuántos artículos mostrar por página (2, 5 o 10)
 5. **Navegación de páginas**: Botones de paginación para navegar entre páginas de artículos
-
-### Funcionalidades Principales
-
-#### 1. Visualización de Artículos
-- Los artículos se muestran con su imagen, título y extracto
-- La información proviene de Wikipedia en español
-- Los artículos se almacenan localmente para acceso rápido
-
-#### 2. Paginación
-- Usa el selector desplegable para cambiar cuántos artículos ver por página
-- Navega entre páginas usando los botones de paginación
-- La selección se mantiene al cambiar de página
-
-#### 3. Recarga de Artículos
-- Haz clic en "Recargar artículos" para actualizar la información desde Wikipedia
-- Los artículos existentes se actualizan con la información más reciente
-- Nuevos artículos del CSV se añaden a la base de datos
 
 ### Configuración del Archivo CSV
 
@@ -202,8 +172,7 @@ Neptuno (planeta)
 
 #### Consejos para Mejores Resultados
 
-- 📌 Usa los títulos exactos como aparecen en Wikipedia
-- 📌 Para nombres de planetas, añade "(planeta)" al final: `Marte (planeta)`
+- 📌 Usa los títulos exactos que aparecen en Wikipedia. Por ejemplo, para los nombres de planetas, añade "(planeta)" al final: `Marte (planeta)`. Para lenguajes de programación, añade "(lenguaje de programación)" al final: `Java (lenguaje de programación)`. Aunque no siempre es necesario, es mejor consultar el nombre en Wikipedia y añadirlo al CSV con ese título.
 - 📌 Evita términos ambiguos que puedan tener múltiples significados
 - 📌 Si un artículo no se encuentra, aparecerá un mensaje de error en la página
 
@@ -261,40 +230,6 @@ AstronomyArticlesPHP/
         └── favicon.svg           # Icono de la aplicación
 ```
 
-### Descripción de Componentes Clave
-
-#### 🎮 Controladores (`app/controllers/`)
-- **controller.php**: Maneja la lógica de la aplicación, carga los datos del CSV, consulta la API de Wikipedia y gestiona las peticiones POST/GET
-
-#### 🗂️ Modelos (`app/models/`)
-- **classes/article.php**: Define la clase Article con sus propiedades (id, título, extracto, imagen)
-- **connection/connectionDB.php**: Gestiona la conexión PDO a MySQL y la creación de la base de datos
-- **dao/**: Implementa el patrón DAO para operaciones CRUD sobre artículos
-- **data/csvData.php**: Lee y procesa el archivo CSV de títulos
-
-#### 🌐 Servicios (`app/services/`)
-- **wikipediaAPIClient.php**: Cliente HTTP usando cURL para consumir la API REST de Wikipedia
-
-#### 🎨 Vistas (`app/views/`)
-- **page.php**: Plantilla HTML principal con el layout de la página
-- **articles.php**: Genera el listado de artículos con paginación
-
-#### 🌍 Público (`public/`)
-- **index.php**: Punto de entrada que carga el controlador principal
-- **styles/style.css**: Estilos CSS para la interfaz
-- **assets/**: Recursos estáticos como el favicon
-
-## 🛠️ Tecnologías Utilizadas
-
-- **PHP 7.0+**: Lenguaje de programación backend (PHP 7.4+ recomendado, incluido en XAMPP)
-- **MySQL**: Sistema de gestión de bases de datos
-- **PDO (PHP Data Objects)**: Extensión para acceso a bases de datos de forma segura
-- **cURL**: Librería para realizar peticiones HTTP
-- **Wikipedia REST API**: API pública de Wikipedia para obtener información de artículos
-- **HTML5**: Estructura de la página web
-- **CSS3**: Estilos y diseño visual
-- **Apache**: Servidor web (incluido en XAMPP)
-
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
@@ -312,123 +247,9 @@ La Licencia MIT es una licencia de software permisiva que permite:
 - 📋 Debes incluir el aviso de copyright y la licencia en todas las copias
 - ⚠️ El software se proporciona "tal cual", sin garantías de ningún tipo
 
-Copyright (c) 2025 Eric Mejias Gamonal
-
 ## 🤝 Contribuciones
 
 ¡Las contribuciones son bienvenidas! Este proyecto está abierto a mejoras y nuevas funcionalidades.
-
-### Cómo Contribuir
-
-1. **Fork el repositorio**
-   - Haz clic en el botón "Fork" en la esquina superior derecha
-
-2. **Clona tu fork**
-   ```bash
-   git clone https://github.com/<TU_USUARIO>/AstronomyArticlesPHP.git
-   cd AstronomyArticlesPHP
-   ```
-
-3. **Crea una rama para tu funcionalidad**
-   ```bash
-   git checkout -b feature/nueva-funcionalidad
-   ```
-
-4. **Realiza tus cambios**
-   - Escribe código limpio y bien documentado
-   - Sigue las convenciones de código existentes
-   - Prueba tus cambios localmente
-
-5. **Commit tus cambios**
-   ```bash
-   git add .
-   git commit -m "Añadir: descripción de tu cambio"
-   ```
-
-6. **Push a tu fork**
-   ```bash
-   git push origin feature/nueva-funcionalidad
-   ```
-
-7. **Abre un Pull Request**
-   - Ve a tu fork en GitHub
-   - Haz clic en "Pull Request"
-   - Describe tus cambios detalladamente
-
-### Ideas para Contribuir
-
-- 🐛 Reportar bugs o problemas
-- ✨ Proponer nuevas funcionalidades
-- 📝 Mejorar la documentación
-- 🎨 Mejorar el diseño de la interfaz
-- 🌍 Añadir soporte para otros idiomas de Wikipedia
-- 🔍 Mejorar el manejo de errores
-- ⚡ Optimizar el rendimiento
-- 🧪 Añadir tests unitarios
-
-### Directrices
-
-- Respeta el código existente y las convenciones
-- Documenta tu código cuando sea necesario
-- Prueba tus cambios antes de hacer un pull request
-- Sé respetuoso con otros contribuidores
-
-## 🔧 Solución de Problemas
-
-### Problemas Comunes
-
-#### ❌ Error: "localhost rechazó la conexión"
-- **Solución**: Asegúrate de que Apache esté iniciado en el Panel de Control de XAMPP
-
-#### ❌ Error: "Access denied for user 'root'@'localhost'"
-- **Solución**: Verifica que MySQL esté iniciado y que las credenciales en `connectionDB.php` sean correctas
-
-#### ❌ Los artículos no se cargan
-- **Solución**: 
-  1. Verifica que tengas conexión a internet (la API de Wikipedia requiere acceso web)
-  2. Revisa que los títulos en el CSV sean exactos
-  3. Comprueba los errores que aparecen en la página
-
-#### ❌ Error: "Page not found" o "404"
-- **Solución**: Asegúrate de que el archivo `.htaccess` esté presente y que Apache tenga habilitado `mod_rewrite`
-
-#### ❌ Los estilos no se cargan
-- **Solución**: Verifica que la ruta en `page.php` apunte correctamente a `./styles/style.css`
-
-### Habilitar mod_rewrite en Apache
-
-Si el `.htaccess` no funciona:
-
-1. Abre el archivo de configuración de Apache:
-   - Windows: `C:\xampp\apache\conf\httpd.conf`
-   - Linux: `/opt/lampp/etc/httpd.conf` (verifica la ruta según tu versión de XAMPP)
-
-2. Busca la línea:
-   ```
-   #LoadModule rewrite_module modules/mod_rewrite.so
-   ```
-
-3. Elimina el `#` al inicio para descomentar:
-   ```
-   LoadModule rewrite_module modules/mod_rewrite.so
-   ```
-
-4. Busca todas las secciones `<Directory>` y cambia `AllowOverride None` por `AllowOverride All`
-
-5. Reinicia Apache desde el Panel de Control de XAMPP
-
-## 📞 Contacto y Soporte
-
-- **Autor**: Eric Mejias Gamonal
-- **GitHub**: [@Eriquito00](https://github.com/Eriquito00)
-- **Repositorio**: [AstronomyArticlesPHP](https://github.com/Eriquito00/AstronomyArticlesPHP)
-
-Si tienes preguntas, sugerencias o encuentras algún problema:
-1. Abre un [Issue](https://github.com/Eriquito00/AstronomyArticlesPHP/issues) en GitHub
-2. Proporciona detalles sobre el problema o sugerencia
-3. Incluye capturas de pantalla si es relevante
-
----
 
 ⭐ Si te gusta este proyecto, ¡dale una estrella en GitHub!
 
