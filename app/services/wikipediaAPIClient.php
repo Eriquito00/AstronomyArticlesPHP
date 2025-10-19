@@ -19,6 +19,11 @@ function getWikipediaArticle($article) {
     
     if (!$data) throw new Exception("Error al decodificar JSON");
 
+    // Verificar si es una página de desambiguación
+    if (isset($data['type']) && $data['type'] === 'disambiguation') {
+        throw new Exception("disambiguation");
+    }
+
     return $data;
 }
 ?>

@@ -8,6 +8,12 @@ class ArticleDAOFunc implements articleDAO {
         $this->connection = $connection;
     }
 
+    public function existsArticleById($id) {
+        $stmt = $this->connection->prepare("SELECT * FROM articles WHERE article_id = ?;");
+        $stmt->execute([$id]);
+        return $stmt->rowCount() > 0;
+    }
+
     public function getAllArticles() {
         $stmt = $this->connection->prepare("SELECT * FROM articles;");
         $stmt->execute();
@@ -15,8 +21,9 @@ class ArticleDAOFunc implements articleDAO {
     }
 
     public function createArticle($article) {
-        $stmt = $this->connection->prepare("INSERT INTO articles (title, extract, img) VALUES (?, ?, ?);");
+        $stmt = $this->connection->prepare("INSERT INTO articles (article_id, title, extract, img) VALUES (?, ?, ?, ?);");
         $stmt->execute([
+            $article->getId(),
             $article->getTitle(),
             $article->getExtract(),
             $article->getImg()
