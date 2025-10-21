@@ -63,7 +63,7 @@ $articlesParam = isset($_GET['articlesPerPage']) ? "&articlesPerPage=" . (int)$_
         <a class="points">···</a>
     <?php endif; ?>
 
-    <a href="?page=<?= $totalPages ?><?= $articlesParam ?>" class="numbers<?= ($totalPages === $actualPage) ? 'active' : '' ?>"><?= $totalPages ?></a>
+    <a href="?page=<?= $totalPages ?><?= $articlesParam ?>" class="numbers<?= ($totalPages == $actualPage) ? 'active' : '' ?>"><?= $totalPages ?></a>
 
     <?php if ($actualPage < $totalPages): ?>
         <a class="simbols" href="?page=<?= $actualPage + 1 ?><?= $articlesParam ?>">></a>
